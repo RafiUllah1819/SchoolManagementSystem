@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "./ClassStyle.css";
 import { useDispatch } from "react-redux";
 import { createClass } from "../../Redux/Actions/ClassesAction";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 export const AddClasses = () => {
   const dispatch = useDispatch();
 
+  const [valid, setValid] = useState(false);
   const [state, setState] = useState({
     category: "",
     section: "",
@@ -21,10 +23,12 @@ export const AddClasses = () => {
     setState(copy);
   };
   const onAddClass = () => {
-    // const { category, section } = state;
-    // const obj = { category, section };
-    // console.log("obj", obj);
-    dispatch(createClass(state));
+    if (state.category === "" || state.section === "") {
+      setValid(true);
+    } else {
+      setValid(false);
+      dispatch(createClass(state, setState));
+    }
   };
   return (
     <div className="wrapper">
@@ -43,6 +47,9 @@ export const AddClasses = () => {
                   value={state.category}
                   onChange={onChangeClass}
                 />
+                {valid && state.category === "" ? (
+                  <span className="text-danger">Please fill the field</span>
+                ) : null}
               </div>
               <div className="col-md-3 form-group">
                 <label htmlFor="">Section</label>
@@ -52,6 +59,9 @@ export const AddClasses = () => {
                   value={state.section}
                   onChange={onChangeSection}
                 />
+                {valid && state.section === "" ? (
+                  <span className="text-danger">Please fill the field</span>
+                ) : null}
               </div>
             </div>
             <button className="btn btn-warning text-white" onClick={onAddClass}>

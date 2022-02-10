@@ -7,31 +7,37 @@ import { db } from "../../Config/Firebase";
 import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 // console.log("db", db);
 
-export const createClass = async (state, dispatch) => {
-  console.log("createnew class", state);
-  const docRef = doc(collection(db, "categories"));
+export const createClass = (state, setState) => async (dispatch) => {
+  // console.log("createnew class", state);
+  const docRef = collection(db, "group");
   try {
-    const createDoc = await setDoc(docRef, state);
+    const createDoc = await addDoc(docRef, state);
+
+    setState({
+      category: " ",
+      section: " ",
+    });
+    // return createDoc;
     console.log("createdoc", createDoc);
   } catch (err) {
     dispatch(createClassErr(err));
   }
 };
 
-export const setClass = (payload) => {
+const setClass = () => {
   return {
     type: CLASSES_SUCCESS,
-    payload,
   };
 };
-export const createClassErr = (err) => {
+const createClassErr = (err) => {
   return {
     type: CLASSES_FAILED,
-    payload: err,
+    err: err,
   };
 };
-export const createClassPending = () => {
+const createClassPending = () => {
   return {
     type: CLASSES_PENDING,
   };
 };
+export { setClass, createClassErr, createClassPending };
