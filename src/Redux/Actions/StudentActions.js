@@ -4,18 +4,26 @@ import {
   STUDENTS_SECCESS,
 } from "../Constants/Constants";
 import { db } from "../../Config/Firebase";
-import { doc, setDoc, addDoc, collection } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
-const addStudentRecord = (state) => (dispatch) => {
+const addStudentRecord = (state, singleObj) => async (dispatch) => {
   console.log("student state", state);
+  console.log(" action signle obj", singleObj);
   dispatch(student_pending());
-  const docRef = collection(db, "group");
-  //   addDoc(docRef);
+  const collectionRef = collection(db, "group", singleObj.id, "subgroup");
+  try {
+    const sending = await addDoc(collectionRef, state);
+    dispatch(student_success(sending));
+    console.log("sending", sending);
+  } catch (error) {
+    console.log("error in colection", error);
+  }
 };
 
-const student_success = () => {
+const student_success = (singleObj) => {
   return {
     type: STUDENTS_SECCESS,
+    payload: singleObj,
   };
 };
 const student_pending = () => {

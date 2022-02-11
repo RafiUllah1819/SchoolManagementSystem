@@ -4,6 +4,7 @@ import "./AddStudents.css";
 import { Calender } from "./Calender";
 import { useSelector, useDispatch } from "react-redux";
 import { addStudentRecord } from "../../Redux/Actions/StudentActions";
+import { fetchAllStudents } from "../../Redux/Actions/FetchStudents";
 
 export const AddStudents = () => {
   const dispatch = useDispatch();
@@ -12,8 +13,9 @@ export const AddStudents = () => {
   useEffect(() => {
     fetchClasses(dispatch);
   }, []);
+
   const [name, setName] = useState("");
-  const [obj, setObj] = useState({});
+  const [singleObj, setSingleObj] = useState({});
 
   const [state, setState] = useState({
     name: "",
@@ -28,6 +30,7 @@ export const AddStudents = () => {
     dob: "",
     shortBio: "",
   });
+
   const onHandleChange = (e) => {
     if (e.target.name === "category") setName(e.target.value);
     setState({
@@ -37,12 +40,12 @@ export const AddStudents = () => {
   };
 
   useEffect(() => {
-    setObj(totalClasses.find((x) => x.category === name));
+    setSingleObj(totalClasses.find((x) => x.category === name));
   }, [name]);
   const addNewStudent = () => {
-    dispatch(addStudentRecord(state));
+    dispatch(addStudentRecord(state, singleObj));
   };
-  console.log(" single obj", obj);
+  console.log(" single obj", singleObj);
   return (
     <div className="wrapper">
       <h4 className="my-4" style={{ color: "darkgoldenrod" }}>
@@ -55,7 +58,7 @@ export const AddStudents = () => {
             style={{ boxShadow: "0px 10px 20px 0px rgb(229 229 229 / 75%)" }}
           >
             <h4 className="my-4" style={{ color: "darkgray" }}>
-              Add New Student {obj?.section}
+              Add New Student
             </h4>
             <div className="row">
               <div className="col-lg-3 col-md-4 form-group">
@@ -124,15 +127,7 @@ export const AddStudents = () => {
                 <select name="category" id="" onChange={onHandleChange}>
                   {totalClasses?.map((element, index) => {
                     return (
-                      <option
-                        value={element.category}
-                        onClick={() =>
-                          console.log(
-                            "%cAddStudents.js line:126 object",
-                            "color: #007acc;"
-                          )
-                        }
-                      >
+                      <option value={element.category}>
                         {element.category}
                       </option>
                     );

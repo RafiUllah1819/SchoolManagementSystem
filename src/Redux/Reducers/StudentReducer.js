@@ -1,34 +1,33 @@
 import {
-  FETCH_CLASS_FAILED,
-  FETCH_CLASS_PENDING,
-  FETCH_CLASS_SUCCESS,
+  STUDENTS_SECCESS,
+  STUDENTS_PENDING,
+  STUDENTS_ERR,
 } from "../Constants/Constants";
 
 const initialState = {
-  data: [],
+  student: {},
   isError: false,
   err: null,
 };
 
-export const ClassReducer = (state = initialState, actions) => {
+export const StudentReducer = (state = initialState, actions) => {
   switch (actions.type) {
-    case FETCH_CLASS_SUCCESS:
+    case STUDENTS_SECCESS:
       return {
         ...state,
-        data: actions.payload,
+        isError: false,
+        student: actions.payload,
       };
-    case FETCH_CLASS_PENDING:
+    case STUDENTS_PENDING:
       return {
         ...state,
         isError: false,
       };
-    case FETCH_CLASS_FAILED:
+    case STUDENTS_ERR:
       return {
         ...state,
         isError: true,
-        err: actions.error,
       };
-
     default:
       return state;
   }

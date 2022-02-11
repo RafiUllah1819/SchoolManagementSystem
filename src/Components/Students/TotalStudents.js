@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./AddStudents.css";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllStudents } from "../../Redux/Actions/FetchStudents";
 
 export const TotalStudents = () => {
+  const dispatch = useDispatch();
+  const totalStudents = useSelector((state) => state.totalStudents?.student);
+  console.log("totalstudents", totalStudents);
+  useEffect(() => {
+    dispatch(fetchAllStudents());
+  }, []);
   return (
     <div className="wrapper">
       <div className="student-form">

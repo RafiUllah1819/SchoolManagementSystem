@@ -23,7 +23,7 @@ export const Clases = () => {
             <h4 className="my-4" style={{ color: "darkgray" }}>
               Total Classes
             </h4>
-            <table class="table table-striped">
+            <table className="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">Classes</th>
