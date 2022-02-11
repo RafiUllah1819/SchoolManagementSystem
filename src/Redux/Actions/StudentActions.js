@@ -13,7 +13,7 @@ const addStudentRecord = (state, singleObj) => async (dispatch) => {
   const collectionRef = collection(db, "group", singleObj.id, "subgroup");
   try {
     const sending = await addDoc(collectionRef, state);
-    dispatch(student_success(sending));
+    dispatch(student_success(singleObj));
     console.log("sending", sending);
   } catch (error) {
     console.log("error in colection", error);

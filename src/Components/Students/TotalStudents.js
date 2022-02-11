@@ -8,7 +8,7 @@ export const TotalStudents = () => {
   const totalStudents = useSelector((state) => state.totalStudents?.student);
   console.log("totalstudents", totalStudents);
   useEffect(() => {
-    dispatch(fetchAllStudents());
+    fetchAllStudents();
   }, []);
   return (
     <div className="wrapper">
