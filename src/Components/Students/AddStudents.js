@@ -1,12 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { fetchClasses } from "../../Redux/Actions/FetchClasses";
 import "./AddStudents.css";
 import { Calender } from "./Calender";
+import { useSelector, useDispatch } from "react-redux";
+import { addStudentRecord } from "../../Redux/Actions/StudentActions";
 
 export const AddStudents = () => {
+  const dispatch = useDispatch();
+  const totalClasses = useSelector((state) => state?.totalClasses.data);
+  console.log("totalclasses", totalClasses);
+  useEffect(() => {
+    fetchClasses(dispatch);
+  }, []);
+  const [name, setName] = useState("");
+  const [obj, setObj] = useState({});
+
+  const [state, setState] = useState({
+    name: "",
+    rollNo: "",
+    fName: "",
+    address: "",
+    gender: "",
+    category: "",
+    section: "",
+    phone: "",
+    admissionId: "",
+    dob: "",
+    shortBio: "",
+  });
+  const onHandleChange = (e) => {
+    if (e.target.name === "category") setName(e.target.value);
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  useEffect(() => {
+    setObj(totalClasses.find((x) => x.category === name));
+  }, [name]);
+  const addNewStudent = () => {
+    dispatch(addStudentRecord(state));
+  };
+  console.log(" single obj", obj);
   return (
     <div className="wrapper">
       <h4 className="my-4" style={{ color: "darkgoldenrod" }}>
-        Student Admisson Form
+        Student Admission Form
       </h4>
       <div className="student-form">
         <div className="card">
@@ -15,34 +55,59 @@ export const AddStudents = () => {
             style={{ boxShadow: "0px 10px 20px 0px rgb(229 229 229 / 75%)" }}
           >
             <h4 className="my-4" style={{ color: "darkgray" }}>
-              Add New Student
+              Add New Student {obj?.section}
             </h4>
             <div className="row">
-              <div className="col-md-3 form-group">
-                <label htmlFor="">First Name</label>
-                <input type="text" className="form-control" />
+              <div className="col-lg-3 col-md-4 form-group">
+                <label htmlFor="">Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  value={state.name}
+                  onChange={onHandleChange}
+                />
               </div>
-              <div className="col-md-3 form-group">
-                <label htmlFor="">Last Name</label>
-                <input type="text" className="form-control" />
-              </div>
-              <div className="col-md-3 form-group">
+              <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Roll No</label>
-                <input type="text" className="form-control" />
+                <input
+                  type="text"
+                  className="form-control"
+                  name="rollNo"
+                  value={state.rollNo}
+                  onChange={onHandleChange}
+                />
               </div>
-              <div className="col-md-3 form-group">
+              <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Father Name</label>
-                <input type="text" className="form-control" />
+                <input
+                  type="text"
+                  className="form-control"
+                  name="fName"
+                  value={state.fName}
+                  onChange={onHandleChange}
+                />
               </div>
-              <div className="col-md-3 form-group">
+              <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Address</label>
-                <input type="text" className="form-control" />
+                <input
+                  type="text"
+                  className="form-control"
+                  name="address"
+                  value={state.address}
+                  onChange={onHandleChange}
+                />
               </div>
-              <div className="col-md-3 form-group">
+              <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Gender</label>
                 <br></br>
-                <select name="" id="">
-                  <option className="gender" value="Please Select">
+                <select
+                  name="gender"
+                  id=""
+                  value={state.gender}
+                  onChange={onHandleChange}
+                >
+                  <option className="gender" value="Please Select gender">
                     Please Select
                   </option>
                   <option className="gender" value="male">
@@ -53,54 +118,57 @@ export const AddStudents = () => {
                   </option>
                 </select>
               </div>
-              <div className="col-md-3 form-group">
+              <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Class</label>
                 <br></br>
-                <select name="" id="">
-                  <option className="category" value="Please Select ">
-                    Please Select Class
-                  </option>
-                  <option className="category" value="">
-                    Nursery
-                  </option>
-                  <option className="category" value="">
-                    KG
-                  </option>
-                  <option className="category" value="">
-                    1
-                  </option>
-                  <option className="category" value="">
-                    2
-                  </option>
-                  <option className="category" value="">
-                    3
-                  </option>
-                  <option className="category" value="">
-                    4
-                  </option>
+                <select name="category" id="" onChange={onHandleChange}>
+                  {totalClasses?.map((element, index) => {
+                    return (
+                      <option
+                        value={element.category}
+                        onClick={() =>
+                          console.log(
+                            "%cAddStudents.js line:126 object",
+                            "color: #007acc;"
+                          )
+                        }
+                      >
+                        {element.category}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
-              <div className="col-md-3 form-group">
+              <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Section</label>
                 <br></br>
-                <select name="" id="">
-                  <option className="gender" value="Please Select">
-                    Please Select Section
-                  </option>
-                  <option value="">Juniour</option>
-                  <option value="">Middle</option>
-                  <option value="">High</option>
+                <select name="section" id="" onChange={onHandleChange}>
+                  {totalClasses?.map((element) => (
+                    <option value={element.section}>{element.section}</option>
+                  ))}
                 </select>
               </div>
-              <div className="col-md-3 form-group">
+              <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Phone</label>
-                <input type="number" className="form-control" />
+                <input
+                  type="number"
+                  className="form-control"
+                  name="phone"
+                  value={state.phone}
+                  onChange={onHandleChange}
+                />
               </div>
-              <div className="col-md-3 form-group">
+              <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Admission Id</label>
-                <input type="number" className="form-control" />
+                <input
+                  type="number"
+                  className="form-control"
+                  name="admissionId"
+                  value={state.address}
+                  onChange={onHandleChange}
+                />
               </div>
-              <div className="col-md-3 form-group">
+              <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Date of Birth</label>
 
                 <Calender />
@@ -110,7 +178,14 @@ export const AddStudents = () => {
               <div className="col-md-5 form-group">
                 <label htmlFor="">Short Bio</label>
                 <br />
-                <textarea name="" id="" cols="50" rows="6"></textarea>
+                <textarea
+                  name="shortBio"
+                  value={state.shortBio}
+                  onChange={onHandleChange}
+                  id=""
+                  cols="50"
+                  rows="6"
+                ></textarea>
               </div>
               <div
                 className="col-md-7 form-group"
@@ -123,7 +198,12 @@ export const AddStudents = () => {
                 />
               </div>
             </div>
-            <button className="btn btn-warning text-white">Submit</button>
+            <button
+              className="btn btn-warning text-white"
+              onClick={addNewStudent}
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>

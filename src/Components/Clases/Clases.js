@@ -6,10 +6,15 @@ import { fetchClasses } from "../../Redux/Actions/FetchClasses";
 export const Clases = () => {
   const dispatch = useDispatch();
   const totalClasses = useSelector((state) => state.totalClasses.data);
-  console.log("totalclasses", totalClasses);
+  // console.log("totalclasses", totalClasses);
   useEffect(() => {
     fetchClasses(dispatch);
   }, []);
+
+  setTimeout(() => {
+    console.log("This will run after 5 second!");
+  }, 5000);
+
   return (
     <div className="wrapper">
       <div className="student-form">
