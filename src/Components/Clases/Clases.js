@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
 import "./ClassStyle.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchClasses } from "../../Redux/Actions/FetchClasses";
+import { fetchClasses, fetchSection } from "../../Redux/Actions/FetchClasses";
 
 export const Clases = () => {
   const dispatch = useDispatch();
-  const totalClasses = useSelector((state) => state.totalClasses.data);
-  // console.log("totalclasses", totalClasses);
+  const totalClasses = useSelector((state) => state.totalClasses.allClasses);
+  const totalSections = useSelector((state) => state.totalClasses.allSections);
+  console.log("totalclasses", totalClasses);
+  console.log("totalsection", totalSections);
   useEffect(() => {
     fetchClasses(dispatch);
+    fetchSection(dispatch);
   }, []);
-
-  setTimeout(() => {
-    console.log("This will run after 5 second!");
-  }, 5000);
 
   return (
     <div className="wrapper">
@@ -35,8 +34,18 @@ export const Clases = () => {
                   totalClasses.map((element, i) => {
                     return (
                       <tr key={i}>
-                        <td>{element.category}</td>
-                        <td>{element.section}</td>
+                        <td>{element.classes}</td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <h5>No Classes found</h5>
+                )}
+                {totalSections ? (
+                  totalSections.map((sectionData, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>{sectionData.sections}</td>
                       </tr>
                     );
                   })

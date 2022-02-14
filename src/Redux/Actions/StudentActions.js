@@ -8,7 +8,7 @@ import { addDoc, collection } from "firebase/firestore";
 
 const addStudentRecord = (state, singleObj) => async (dispatch) => {
   console.log("student state", state);
-  console.log(" action signle obj", singleObj);
+  console.log(" action single obj", singleObj);
   dispatch(student_pending());
   const collectionRef = collection(db, "group", singleObj.id, "subgroup");
   try {

@@ -5,10 +5,10 @@ import { fetchAllStudents } from "../../Redux/Actions/FetchStudents";
 
 export const TotalStudents = () => {
   const dispatch = useDispatch();
-  const totalStudents = useSelector((state) => state.totalStudents?.student);
-  console.log("totalstudents", totalStudents);
+  const studentObj = useSelector((state) => state.totalStudents.student);
+  console.log("studentObj", studentObj);
   useEffect(() => {
-    fetchAllStudents();
+    fetchAllStudents(studentObj);
   }, []);
   return (
     <div className="wrapper">
@@ -34,14 +34,14 @@ export const TotalStudents = () => {
                   placeholder="Search by Name ..."
                 />
               </div>
-              <div className="col-md-4 form-group px-2">
+              <div className="col-md-3 form-group px-2">
                 <input
                   type="text"
                   className="form-control"
                   placeholder="Search by Class ..."
                 />
               </div>
-              <div className="col-md-1">
+              <div className="col-md-2">
                 <button
                   className="btn btn-warning"
                   style={{ width: "80px", height: "50px", color: "white" }}
@@ -70,62 +70,6 @@ export const TotalStudents = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#1</td>
-                  <td>#100001</td>
-                  <td>
-                    <i className="fa fa-user" style={{ fontSize: "24px" }}></i>
-                  </td>
-                  <td>Khan</td>
-                  <td>Male</td>
-                  <td>A</td>
-                  <td>Ahmad</td>
-                  <td>Islamabad</td>
-                  <td>7 Sep, 2009</td>
-                  <td>034543657676</td>
-                </tr>
-                <tr>
-                  <td>#1</td>
-                  <td>#100001</td>
-                  <td>
-                    <i className="fa fa-user" style={{ fontSize: "24px" }}></i>
-                  </td>
-                  <td>Khan</td>
-                  <td>Male</td>
-                  <td>A</td>
-                  <td>Ahmad</td>
-                  <td>Islamabad</td>
-                  <td>7 Sep, 2009</td>
-                  <td>034543657676</td>
-                </tr>
-                <tr>
-                  <td>#1</td>
-                  <td>#100001</td>
-                  <td>
-                    <i className="fa fa-user" style={{ fontSize: "24px" }}></i>
-                  </td>
-                  <td>Khan</td>
-                  <td>Male</td>
-                  <td>A</td>
-                  <td>Ahmad</td>
-                  <td>Islamabad</td>
-                  <td>7 Sep, 2009</td>
-                  <td>034543657676</td>
-                </tr>
-                <tr>
-                  <td>#1</td>
-                  <td>#100001</td>
-                  <td>
-                    <i className="fa fa-user" style={{ fontSize: "24px" }}></i>
-                  </td>
-                  <td>Khan</td>
-                  <td>Male</td>
-                  <td>A</td>
-                  <td>Ahmad</td>
-                  <td>Islamabad</td>
-                  <td>7 Sep, 2009</td>
-                  <td>034543657676</td>
-                </tr>
                 <tr>
                   <td>#1</td>
                   <td>#100001</td>

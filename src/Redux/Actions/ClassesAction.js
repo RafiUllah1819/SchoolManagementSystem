@@ -8,25 +8,27 @@ import { doc, setDoc, addDoc, collection } from "firebase/firestore";
 // console.log("db", db);
 
 export const createClass = (state, setState) => async (dispatch) => {
-  // console.log("createnew class", state);
-  const docRef = collection(db, "group");
+  const { classes, sections } = state;
+  console.log("createnew class", classes);
+  const classRef = collection(db, "classes");
+  const sectionRef = collection(db, "sections");
+  console.log("classRef", classRef);
   try {
-    const createDoc = await addDoc(docRef, state);
+    const createDocOfClass = await addDoc(classRef, { classes: classes });
+    const createDocOfSection = await addDoc(sectionRef, { sections: sections });
 
-    setState({
-      category: " ",
-      section: " ",
-    });
-    // return createDoc;
-    console.log("createdoc", createDoc);
+    console.log("createDocOfClass", createDocOfClass.id);
+    console.log("createDocOfSection", createDocOfSection.id);
+    dispatch(CLASSES_SUCCESS(createDocOfClass));
   } catch (err) {
-    dispatch(createClassErr(err));
+    dispatch(createClassErr("error in createclass", err));
   }
 };
 
-const setClass = () => {
+const setClass = (createDocOfClass) => {
   return {
     type: CLASSES_SUCCESS,
+    payload: createDocOfClass,
   };
 };
 const createClassErr = (err) => {

@@ -9,26 +9,21 @@ export const AddClasses = () => {
 
   const [valid, setValid] = useState(false);
   const [state, setState] = useState({
-    category: "",
-    section: "",
+    classes: "",
+    sections: "",
   });
   const onChangeClass = (e) => {
     let copy = { ...state };
-    copy.category = e.target.value;
+    copy.classes = e.target.value;
     setState(copy);
   };
-  const onChangeSection = (e) => {
+  const onChangesections = (e) => {
     let copy = { ...state };
-    copy.section = e.target.value;
+    copy.sections = e.target.value;
     setState(copy);
   };
   const onAddClass = () => {
-    if (state.category === "" || state.section === "") {
-      setValid(true);
-    } else {
-      setValid(false);
-      dispatch(createClass(state, setState));
-    }
+    dispatch(createClass(state, setState));
   };
 
   return (
@@ -45,24 +40,24 @@ export const AddClasses = () => {
                 <input
                   type="text"
                   className="form-control"
-                  value={state.category}
+                  value={state.classes}
                   onChange={onChangeClass}
                 />
-                {valid && state.category === "" ? (
+                {/* {valid && state.classes === "" ? (
                   <span className="text-danger">Please fill the field</span>
-                ) : null}
+                ) : null} */}
               </div>
               <div className="col-md-3 form-group">
-                <label htmlFor="">Section</label>
+                <label htmlFor="">sections</label>
                 <input
                   type="text"
                   className="form-control"
-                  value={state.section}
-                  onChange={onChangeSection}
+                  value={state.sections}
+                  onChange={onChangesections}
                 />
-                {valid && state.section === "" ? (
+                {/* {valid && state.sections === "" ? (
                   <span className="text-danger">Please fill the field</span>
-                ) : null}
+                ) : null} */}
               </div>
             </div>
             <button className="btn btn-warning text-white" onClick={onAddClass}>

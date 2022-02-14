@@ -4,11 +4,18 @@ import {
   FETCH_STUDENT_SUCCESS,
 } from "../Constants/Constants";
 import { db } from "../../Config/Firebase";
-import { doc, collection, onSnapshot } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
-const fetchAllStudents = () => {
-  //   const collectionRef = collection(db, "group", singleObj.id, "subgroup");
-  console.log("fetch students");
+const fetchAllStudents = (studentObj) => {
+  // const collectionRef = collection(db, "group", studentObj.id, "subgroup");
+  // const q = query(collectionRef, orderBy("createdAt", "asc"));
+  console.log("fetch students", studentObj);
 };
 
 const getStudents = () => {
