@@ -37,7 +37,7 @@ const fetchSection = (dispatch) => {
         const updatedData = snapshot.docs.map((doc) => {
           return { ...doc.data(), id: doc.id };
         });
-        console.log("updated data", updatedData);
+        // console.log("updated data", updatedData);
         dispatch(fetchSectionSuccess(updatedData));
       }
     },

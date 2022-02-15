@@ -2,21 +2,23 @@ import {
   STUDENTS_SECCESS,
   STUDENTS_PENDING,
   STUDENTS_ERR,
+  FETCH_STUDENT_SUCCESS,
 } from "../Constants/Constants";
 
 const initialState = {
   student: {},
   isError: false,
   err: null,
+  allStudents: [],
 };
 
 export const StudentReducer = (state = initialState, actions) => {
   switch (actions.type) {
-    case STUDENTS_SECCESS:
+    case FETCH_STUDENT_SUCCESS:
       return {
         ...state,
         isError: false,
-        student: actions.payload,
+        allStudents: actions.payload,
       };
     case STUDENTS_PENDING:
       return {

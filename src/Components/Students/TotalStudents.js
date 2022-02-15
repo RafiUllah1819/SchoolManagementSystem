@@ -5,10 +5,11 @@ import { fetchAllStudents } from "../../Redux/Actions/FetchStudents";
 
 export const TotalStudents = () => {
   const dispatch = useDispatch();
-  const studentObj = useSelector((state) => state.totalStudents.student);
-  console.log("studentObj", studentObj);
+  const totalStudents = useSelector((state) => state.totalStudents.allStudents);
+  // console.log("totalstudents", totalStudents);
+
   useEffect(() => {
-    fetchAllStudents(studentObj);
+    fetchAllStudents(dispatch);
   }, []);
   return (
     <div className="wrapper">
@@ -59,10 +60,11 @@ export const TotalStudents = () => {
                 <tr>
                   <th scope="col">Roll No</th>
                   <th scope="col">Admisson No</th>
-                  <th scope="col">Photo</th>
+                  {/* <th scope="col">Photo</th> */}
                   <th scope="col">Name</th>
-                  <th scope="col">Gender</th>
+                  <th scope="col">Class</th>
                   <th scope="col">Section</th>
+                  <th scope="col">Gender</th>
                   <th scope="col">Parents</th>
                   <th scope="col">Address</th>
                   <th scope="col">DOB</th>
@@ -70,20 +72,29 @@ export const TotalStudents = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#1</td>
-                  <td>#100001</td>
-                  <td>
-                    <i className="fa fa-user" style={{ fontSize: "24px" }}></i>
-                  </td>
-                  <td>Khan</td>
-                  <td>Male</td>
-                  <td>A</td>
-                  <td>Ahmad</td>
-                  <td>Islamabad</td>
-                  <td>7 Sep, 2009</td>
-                  <td>034543657676</td>
-                </tr>
+                {totalStudents.map((student, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{student.rollNo}</td>
+                      <td>{student.admissionId}</td>
+                      {/* <td>
+                        <i
+                          className="fa fa-user"
+                          style={{ fontSize: "24px" }}
+                        ></i>
+                      </td> */}
+                      <td>{student.name}</td>
+                      <td>{student.className}</td>
+                      <td>{student.sectionName}</td>
+                      <td>{student.gender}</td>
+                      <td>{student.fName}</td>
+                      <td>{student.address}</td>
+                      <td>{student.dob}</td>
+                      <td>{student.phone}</td>
+                    </tr>
+                  );
+                })}
+                <tr></tr>
               </tbody>
             </table>
           </div>

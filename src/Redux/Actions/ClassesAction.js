@@ -17,8 +17,8 @@ export const createClass = (state, setState) => async (dispatch) => {
     const createDocOfClass = await addDoc(classRef, { classes: classes });
     const createDocOfSection = await addDoc(sectionRef, { sections: sections });
 
-    console.log("createDocOfClass", createDocOfClass.id);
-    console.log("createDocOfSection", createDocOfSection.id);
+    // console.log("createDocOfClass", createDocOfClass.id);
+    // console.log("createDocOfSection", createDocOfSection.id);
     dispatch(CLASSES_SUCCESS(createDocOfClass));
   } catch (err) {
     dispatch(createClassErr("error in createclass", err));

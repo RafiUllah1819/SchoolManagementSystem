@@ -12,15 +12,32 @@ import {
   query,
 } from "firebase/firestore";
 
-const fetchAllStudents = (studentObj) => {
-  // const collectionRef = collection(db, "group", studentObj.id, "subgroup");
+const fetchAllStudents = (dispatch) => {
+  const collectionRef = collection(db, "students");
   // const q = query(collectionRef, orderBy("createdAt", "asc"));
-  console.log("fetch students", studentObj);
+  const unsub = onSnapshot(
+    collectionRef,
+    (snapshot) => {
+      if (!snapshot.empty) {
+        const updateSnap = snapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        });
+        console.log("udpatedSnap of students", updateSnap);
+        dispatch(getStudents(updateSnap));
+      }
+    },
+    (error) => {
+      dispatch(getStudentErr(error));
+      console.log(error);
+    }
+  );
+  return () => unsub();
 };
 
-const getStudents = () => {
+const getStudents = (updateSnap) => {
   return {
     type: FETCH_STUDENT_SUCCESS,
+    payload: updateSnap,
   };
 };
 

@@ -5,17 +5,25 @@ import { Calender } from "./Calender";
 import { useSelector, useDispatch } from "react-redux";
 import { addStudentRecord } from "../../Redux/Actions/StudentActions";
 import { fetchAllStudents } from "../../Redux/Actions/FetchStudents";
+import { fetchSection } from "../../Redux/Actions/FetchClasses";
 
 export const AddStudents = () => {
   const dispatch = useDispatch();
-  const totalClasses = useSelector((state) => state?.totalClasses.data);
+  const totalClasses = useSelector((state) => state?.totalClasses.allClasses);
+  const totalSections = useSelector((state) => state.totalClasses.allSections);
   console.log("totalclasses", totalClasses);
+  console.log("totalsections in student", totalSections);
   useEffect(() => {
     fetchClasses(dispatch);
   }, []);
+  useEffect(() => {
+    fetchSection(dispatch);
+  }, []);
 
-  const [name, setName] = useState("");
-  const [singleObj, setSingleObj] = useState({});
+  const [classData, setClassData] = useState("");
+  const [sectionData, setSectionData] = useState("");
+  const [classObj, setClassObj] = useState({});
+  const [sectionObj, setSectionObj] = useState({});
 
   const [state, setState] = useState({
     name: "",
@@ -32,9 +40,27 @@ export const AddStudents = () => {
     dob: "",
     shortBio: "",
   });
+  const emptyState = () => {
+    setState({
+      name: "",
+      rollNo: "",
+      fName: "",
+      address: "",
+      gender: "",
+      className: "",
+      classId: "",
+      sectionName: "",
+      sectionId: "",
+      phone: "",
+      admissionId: "",
+      dob: "",
+      shortBio: "",
+    });
+  };
 
   const onHandleChange = (e) => {
-    if (e.target.name === "category") setName(e.target.value);
+    if (e.target.name === "classes") setClassData(e.target.value);
+    if (e.target.name === "sections") setSectionData(e.target.value);
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -42,12 +68,19 @@ export const AddStudents = () => {
   };
 
   useEffect(() => {
-    setSingleObj(totalClasses.find((x) => x.category === name));
-  }, [name]);
+    setClassObj(totalClasses.find((x) => x.classes === classData));
+  }, [classData]);
+
+  useEffect(() => {
+    setSectionObj(totalSections.find((x) => x.sections === sectionData));
+  }, [sectionData]);
+
   const addNewStudent = () => {
-    dispatch(addStudentRecord(state, singleObj));
+    dispatch(addStudentRecord(state, classObj, sectionObj, emptyState));
   };
-  console.log(" single obj", singleObj);
+  // console.log(" class obj", classObj);
+  // console.log(" section obj", sectionObj);
+
   return (
     <div className="wrapper">
       <h4 className="my-4" style={{ color: "darkgoldenrod" }}>
@@ -126,12 +159,10 @@ export const AddStudents = () => {
               <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Class</label>
                 <br></br>
-                <select name="category" id="" onChange={onHandleChange}>
+                <select name="classes" id="" onChange={onHandleChange}>
                   {totalClasses?.map((element, index) => {
                     return (
-                      <option value={element.category}>
-                        {element.category}
-                      </option>
+                      <option value={element.classes}>{element.classes}</option>
                     );
                   })}
                 </select>
@@ -139,9 +170,9 @@ export const AddStudents = () => {
               <div className="col-lg-3 col-md-4 form-group">
                 <label htmlFor="">Section</label>
                 <br></br>
-                <select name="section" id="" onChange={onHandleChange}>
-                  {totalClasses?.map((element) => (
-                    <option value={element.section}>{element.section}</option>
+                <select name="sections" id="" onChange={onHandleChange}>
+                  {totalSections?.map((element) => (
+                    <option value={element.sections}>{element.sections}</option>
                   ))}
                 </select>
               </div>

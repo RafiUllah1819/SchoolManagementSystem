@@ -7,10 +7,12 @@ export const Clases = () => {
   const dispatch = useDispatch();
   const totalClasses = useSelector((state) => state.totalClasses.allClasses);
   const totalSections = useSelector((state) => state.totalClasses.allSections);
-  console.log("totalclasses", totalClasses);
-  console.log("totalsection", totalSections);
+  // console.log("totalclasses", totalClasses);
+  // console.log("totalsection", totalSections);
   useEffect(() => {
     fetchClasses(dispatch);
+  }, []);
+  useEffect(() => {
     fetchSection(dispatch);
   }, []);
 
@@ -22,11 +24,14 @@ export const Clases = () => {
             <h4 className="my-4" style={{ color: "darkgray" }}>
               Total Classes
             </h4>
-            <table className="table table-striped">
+            <table
+              className="table table-striped"
+              style={{ maxWidth: "330px" }}
+            >
               <thead>
                 <tr>
                   <th scope="col">Classes</th>
-                  <th scope="col">Sections</th>
+                  {/* <th scope="col">Sections</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -41,7 +46,7 @@ export const Clases = () => {
                 ) : (
                   <h5>No Classes found</h5>
                 )}
-                {totalSections ? (
+                {/* {totalSections ? (
                   totalSections.map((sectionData, i) => {
                     return (
                       <tr key={i}>
@@ -51,7 +56,7 @@ export const Clases = () => {
                   })
                 ) : (
                   <h5>No Classes found</h5>
-                )}
+                )} */}
               </tbody>
             </table>
           </div>
