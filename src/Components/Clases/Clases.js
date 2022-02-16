@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchClasses, fetchSection } from "../../Redux/Actions/FetchClasses";
 import { Link } from "react-router-dom";
 import { fetchAllStudents } from "../../Redux/Actions/FetchStudents";
-import { singleClassStudent } from "../../Redux/Actions/SingleClassStudent";
+import { singleClassStudent as fetchstudent } from "../../Redux/Actions/SingleClassStudent";
 
 export const Clases = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export const Clases = () => {
     dispatch(fetchClasses());
     dispatch(fetchSection());
     dispatch(fetchAllStudents());
-    // singleClassStudent(singleClassStudent);
+    fetchstudent(singleClassStudent)
   }, []);
 
   const showSingleClass = (id) => {
