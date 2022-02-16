@@ -19,9 +19,9 @@ export const createClass = (state, setState) => async (dispatch) => {
 
     // console.log("createDocOfClass", createDocOfClass.id);
     // console.log("createDocOfSection", createDocOfSection.id);
-    dispatch(CLASSES_SUCCESS(createDocOfClass));
+    dispatch(CLASSES_SUCCESS("success"));
   } catch (err) {
-    dispatch(createClassErr("error in createclass", err));
+    dispatch(createClassErr("error in createclass"));
   }
 };
 

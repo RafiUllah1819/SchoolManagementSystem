@@ -49,7 +49,7 @@ const addStudentRecord =
         className: classes,
         classId: id2,
       });
-      dispatch(student_success(sending));
+      dispatch(student_success());
       console.log("sending", sending);
     } catch (error) {
       console.log("error in colection", error);

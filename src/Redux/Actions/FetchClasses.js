@@ -8,45 +8,45 @@ import {
 } from "../Constants/Constants";
 import { async } from "@firebase/util";
 
-const fetchClasses = (dispatch) => {
+const fetchClasses = () => {
   const collectionRef = collection(db, "classes");
-  const unSub = onSnapshot(
-    collectionRef,
-    (snapshot) => {
-      if (!snapshot.empty) {
-        const updatedData = snapshot.docs.map((doc) => {
-          return { ...doc.data(), id: doc.id };
-        });
-        console.log("updated data", updatedData);
-        dispatch(fetchClassSuccess(updatedData));
+  return (dispatch) =>
+    onSnapshot(
+      collectionRef,
+      (snapshot) => {
+        if (!snapshot.empty) {
+          const updatedData = snapshot.docs.map((doc) => {
+            return { ...doc.data(), id: doc.id };
+          });
+          console.log("updated data", updatedData);
+          dispatch(fetchClassSuccess(updatedData));
+        }
+      },
+      (error) => {
+        dispatch(fetchClassErr(error));
+        console.log(error);
       }
-    },
-    (error) => {
-      dispatch(fetchClassErr(error));
-      console.log(error);
-    }
-  );
-  return () => unSub();
+    );
 };
-const fetchSection = (dispatch) => {
+const fetchSection = () => {
   const collectionRef = collection(db, "sections");
-  const unSub = onSnapshot(
-    collectionRef,
-    (snapshot) => {
-      if (!snapshot.empty) {
-        const updatedData = snapshot.docs.map((doc) => {
-          return { ...doc.data(), id: doc.id };
-        });
-        // console.log("updated data", updatedData);
-        dispatch(fetchSectionSuccess(updatedData));
+  return (dispatch) =>
+    onSnapshot(
+      collectionRef,
+      (snapshot) => {
+        if (!snapshot.empty) {
+          const updatedData = snapshot.docs.map((doc) => {
+            return { ...doc.data(), id: doc.id };
+          });
+          // console.log("updated data", updatedData);
+          dispatch(fetchSectionSuccess(updatedData));
+        }
+      },
+      (error) => {
+        dispatch(fetchClassErr(error));
+        console.log(error);
       }
-    },
-    (error) => {
-      dispatch(fetchClassErr(error));
-      console.log(error);
-    }
-  );
-  return () => unSub();
+    );
 };
 
 const fetchClassSuccess = (updatedData) => {

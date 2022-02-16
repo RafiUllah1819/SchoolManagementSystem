@@ -1,20 +1,38 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./ClassStyle.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClasses, fetchSection } from "../../Redux/Actions/FetchClasses";
+import { Link } from "react-router-dom";
+import { fetchAllStudents } from "../../Redux/Actions/FetchStudents";
+import { singleClassStudent } from "../../Redux/Actions/SingleClassStudent";
 
 export const Clases = () => {
   const dispatch = useDispatch();
   const totalClasses = useSelector((state) => state.totalClasses.allClasses);
   const totalSections = useSelector((state) => state.totalClasses.allSections);
-  // console.log("totalclasses", totalClasses);
+  const totalStudents = useSelector((state) => state.totalStudents.allStudents);
+  const [index, setIndex] = useState(null);
+  const [singleClassStudent, setSingleClassStudent] = useState();
+  console.log(" totalStudents of class", totalStudents);
   // console.log("totalsection", totalSections);
   useEffect(() => {
-    fetchClasses(dispatch);
+    dispatch(fetchClasses());
+    dispatch(fetchSection());
+    dispatch(fetchAllStudents());
+    // singleClassStudent(singleClassStudent);
   }, []);
-  useEffect(() => {
-    fetchSection(dispatch);
-  }, []);
+
+  const showSingleClass = (id) => {
+    console.log("showsinglemethod", id);
+    setIndex(id);
+
+    const newStudent = totalStudents.filter(
+      (student) => student.classId === id
+    );
+    setSingleClassStudent(newStudent);
+    console.log("newstudent", newStudent);
+  };
+  console.log("singlclassStudent", singleClassStudent);
 
   return (
     <div className="wrapper">
@@ -24,6 +42,7 @@ export const Clases = () => {
             <h4 className="my-4" style={{ color: "darkgray" }}>
               Total Classes
             </h4>
+            <h4 className="my-4" style={{ color: "darkgray" }}></h4>
             <table
               className="table table-striped"
               style={{ maxWidth: "330px" }}
@@ -39,7 +58,17 @@ export const Clases = () => {
                   totalClasses.map((element, i) => {
                     return (
                       <tr key={i}>
-                        <td>{element.classes}</td>
+                        {/* <Link to="/"> */}
+
+                        <Link to="/singleclass">
+                          <td
+                            onClick={() => showSingleClass(element.id)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            {element.classes}
+                          </td>
+                        </Link>
+                        {/* </Link> */}
                       </tr>
                     );
                   })

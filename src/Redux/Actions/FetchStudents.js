@@ -12,10 +12,10 @@ import {
   query,
 } from "firebase/firestore";
 
-const fetchAllStudents = (dispatch) => {
+const fetchAllStudents = () => {
   const collectionRef = collection(db, "students");
   // const q = query(collectionRef, orderBy("createdAt", "asc"));
-  const unsub = onSnapshot(
+  const unsub = (dispatch) => onSnapshot(
     collectionRef,
     (snapshot) => {
       if (!snapshot.empty) {
@@ -27,11 +27,11 @@ const fetchAllStudents = (dispatch) => {
       }
     },
     (error) => {
-      dispatch(getStudentErr(error));
+      dispatch(getStudentErr());
       console.log(error);
     }
   );
-  return () => unsub();
+  return (dispatch) => unsub(dispatch);
 };
 
 const getStudents = (updateSnap) => {

@@ -12,6 +12,7 @@ import { Parents } from "./Components/Dashboard/Parents";
 import { Students } from "./Components/Dashboard/Students";
 import { Teacher } from "./Components/Dashboard/Teacher";
 import { StudentDetail } from "./Components/Students/StudentDetail";
+import { SingleClass } from "./Components/Clases/SingleClass";
 
 export const AllRoutes = () => {
   return (
@@ -29,6 +30,7 @@ export const AllRoutes = () => {
         <Route path="/teachers" element={<TotalTeacher />} />
         <Route path="/addclass" element={<AddClasses />} />
         <Route path="/classes" element={<Clases />} />
+        <Route path="/singleclass" element={<SingleClass />} />
       </Routes>
     </div>
   );
