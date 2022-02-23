@@ -5,12 +5,28 @@ import { fetchAllStudents } from "../../Redux/Actions/FetchStudents";
 
 export const TotalStudents = () => {
   const dispatch = useDispatch();
-  const totalStudents = useSelector((state) => state.totalStudents.allStudents);
+  const totalStudents = useSelector(
+    (state) => state.totalStudents?.allStudents
+  );
   // console.log("totalstudents", totalStudents);
-
+  const [filterStudent, setFilterStudent] = useState([]);
   useEffect(() => {
-    fetchAllStudents(dispatch);
+    dispatch(fetchAllStudents());
   }, []);
+  useEffect(() => {
+    setFilterStudent(totalStudents);
+  }, [totalStudents]);
+
+  const filterRecord = (e) => {
+    const value = e.target.value;
+    let arr = [];
+    if (value.length >= 3) {
+      arr = filterStudent.filter((data) => {
+        return data.name.toLowerCase().startsWith(value.toLowerCase());
+      });
+      setFilterStudent(arr);
+    } else setFilterStudent(totalStudents);
+  };
   return (
     <div className="wrapper">
       <div className="student-form">
@@ -30,9 +46,10 @@ export const TotalStudents = () => {
               </div>
               <div className="col-md-4 form-group px-2">
                 <input
-                  type="text"
+                  type="search"
                   className="form-control"
                   placeholder="Search by Name ..."
+                  onChange={filterRecord}
                 />
               </div>
               <div className="col-md-3 form-group px-2">
@@ -59,7 +76,7 @@ export const TotalStudents = () => {
               <thead>
                 <tr>
                   <th scope="col">Roll No</th>
-                  <th scope="col">Admisson No</th>
+                  {/* <th scope="col">Admisson No</th> */}
                   {/* <th scope="col">Photo</th> */}
                   <th scope="col">Name</th>
                   <th scope="col">Class</th>
@@ -72,11 +89,11 @@ export const TotalStudents = () => {
                 </tr>
               </thead>
               <tbody>
-                {totalStudents.map((student, i) => {
+                {filterStudent.map((student, i) => {
                   return (
                     <tr key={i}>
                       <td>{student.rollNo}</td>
-                      <td>{student.admissionId}</td>
+                      {/* <td>{student.admissionId}</td> */}
                       {/* <td>
                         <i
                           className="fa fa-user"

@@ -5,6 +5,7 @@ import {
   FETCH_CLASS_PENDING,
   FETCH_CLASS_SUCCESS,
   FETCH_SECTIONS_SUCCESS,
+  FETCH_SINGLE_CLASS,
 } from "../Constants/Constants";
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   err: null,
   classData: {},
   allSections: [],
+  singleClassStudents: [],
 };
 
 export const ClassReducer = (state = initialState, actions) => {
@@ -44,6 +46,12 @@ export const ClassReducer = (state = initialState, actions) => {
         ...state,
         isError: true,
         err: actions.error,
+      };
+    case FETCH_SINGLE_CLASS:
+      return {
+        ...state,
+        isError: false,
+        singleClassStudents: actions.payload,
       };
 
     default:

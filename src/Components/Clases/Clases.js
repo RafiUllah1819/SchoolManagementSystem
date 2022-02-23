@@ -12,27 +12,33 @@ export const Clases = () => {
   const totalSections = useSelector((state) => state.totalClasses.allSections);
   const totalStudents = useSelector((state) => state.totalStudents.allStudents);
   const [index, setIndex] = useState(null);
-  const [singleClassStudent, setSingleClassStudent] = useState();
+  // const [singleClassStudent, setSingleClassStudent] = useState([]);
   console.log(" totalStudents of class", totalStudents);
   // console.log("totalsection", totalSections);
   useEffect(() => {
     dispatch(fetchClasses());
     dispatch(fetchSection());
     dispatch(fetchAllStudents());
-    fetchstudent(singleClassStudent)
+
   }, []);
+
+  // useEffect(() => {
+   
+  // }, [singleClassStudent]);
 
   const showSingleClass = (id) => {
     console.log("showsinglemethod", id);
     setIndex(id);
 
     const newStudent = totalStudents.filter(
-      (student) => student.classId === id
+      (student) => student.classId === id 
     );
-    setSingleClassStudent(newStudent);
-    console.log("newstudent", newStudent);
+    dispatch(fetchstudent(newStudent))
+
+    // setSingleClassStudent(newStudent);
+    // console.log("newstudent", newStudent);
   };
-  console.log("singlclassStudent", singleClassStudent);
+  // console.log("singlclassStudent", singleClassStudent);
 
   return (
     <div className="wrapper">
